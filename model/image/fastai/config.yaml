@@ -1,0 +1,51 @@
+run:
+  seed: 42
+  output_dir: artifacts/image
+  run_name: null   # si null -> timestamp auto
+
+data:
+  data_dir: data/ImagensTCCRotuladas/Treino  # Treino uniquement; split valid par RandomSplitter
+  classes_mode: 4        # 3 puis 4 (BIHAR)
+  class_names: ["Chao", "Milho", "Ervas", "Milho_ervas"]
+  per_class_limit: 1500  # réduit la taille effective d'entraînement
+  img_size: 128
+  batch_size: 64
+  valid_pct: 0.2
+  num_workers: 0  # force single process to avoid Windows pickling issues with custom callables
+
+augment:
+  use_noise: true
+  noise:
+    same_across_channels: true
+    gaussian_std: 0.25
+    saltpepper_amount: 0.08
+    speckle_scale: 0.35
+
+  use_mask: true
+  mask:
+    num_patches: 1
+    patch_size: 0.35
+
+  # fastai aug_transforms
+  do_flip: true
+  flip_vert: true
+  max_rotate: 20.0
+  max_zoom: 1.1
+  max_lighting: 0.2
+  max_warp: 0.2
+  p_affine: 0.75
+  p_lighting: 0.75
+
+train:
+  arch: resnet34
+  pretrained: true
+  epochs: 2
+  lr: 0.001
+  early_stop_patience: 10
+  grad_clip_max_norm: 0.5
+  noise_anneal_pct_stop: 0.8
+
+eval:
+  export_confusion_matrix: true
+  export_top_losses: true
+  top_losses_k: 12
