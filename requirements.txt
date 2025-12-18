@@ -1,0 +1,14 @@
+torch
+torchvision
+fastapi
+uvicorn
+pillow
+numpy
+scikit-learn
+scikit-image
+matplotlib
+seaborn
+tqdm
+lime
+jupyter
+ipykernel
