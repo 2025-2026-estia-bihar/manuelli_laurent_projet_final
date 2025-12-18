@@ -12,3 +12,8 @@ tqdm
 lime
 jupyter
 ipykernel
+pandas
+openmeteo-requests
+requests-cache
+retry-requests
+statsmodels

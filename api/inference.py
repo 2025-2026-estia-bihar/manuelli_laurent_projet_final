@@ -3,13 +3,15 @@ import os
 from pathlib import Path
 
 import torch
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Query
 from PIL import Image, ImageOps
 from torchvision import transforms
 
 from Model.training.utils import add_repo_to_path, build_transforms, create_model
 
 add_repo_to_path()
+
+from Api.weather_service import DEFAULT_HOURLY, fetch_hourly_weather
 
 DEFAULT_CLASSES = ["ground", "corn", "weeds", "corn_weeds"]
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -66,3 +68,25 @@ async def predict(file: UploadFile = File(...)):
         "predicted_class": classes[top_idx],
         "probabilities": {cls: float(prob) for cls, prob in zip(classes, probs_list)},
     }
+
+
+@app.get("/weather/hourly")
+async def weather_hourly(
+    latitude: float,
+    longitude: float,
+    start_date: str,
+    end_date: str,
+    variables: str = Query(
+        ",".join(DEFAULT_HOURLY),
+        description="Comma-separated Open-Meteo hourly variables (e.g. temperature_2m,relative_humidity_2m)",
+    ),
+):
+    hourly_vars = [var.strip() for var in variables.split(",") if var.strip()]
+    result = fetch_hourly_weather(
+        latitude=latitude,
+        longitude=longitude,
+        start_date=start_date,
+        end_date=end_date,
+        hourly=hourly_vars,
+    )
+    return result
