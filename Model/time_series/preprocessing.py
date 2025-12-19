@@ -18,14 +18,14 @@ class TimeSeriesPreprocessor:
 
         cleaned = df.copy()
 
-        # 1) datetime (UTC cohérent avec aggregate_to_step)
+        # 1) enforce datetime in UTC (consistent with aggregate_to_step)
         cleaned[self.time_col] = pd.to_datetime(cleaned[self.time_col], utc=True, errors="coerce")
         cleaned = cleaned.dropna(subset=[self.time_col])
 
-        # 2) numeric target (sinon interpolate peut échouer / faire n'importe quoi)
+        # 2) numeric target (otherwise interpolate may fail or behave poorly)
         cleaned[self.target_col] = pd.to_numeric(cleaned[self.target_col], errors="coerce")
 
-        # 3) DatetimeIndex obligatoire pour interpolate(method="time")
+        # 3) DatetimeIndex required for interpolate(method="time")
         cleaned = cleaned.sort_values(self.time_col).set_index(self.time_col)
 
         cleaned[self.target_col] = (
@@ -35,7 +35,7 @@ class TimeSeriesPreprocessor:
             .ffill()
         )
 
-        # 4) Revenir à une colonne time
+        # 4) Return to a time column
         cleaned = cleaned.reset_index()
 
         return cleaned

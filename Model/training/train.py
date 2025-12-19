@@ -42,7 +42,7 @@ def parse_args():
     parser.add_argument("--epochs", type=int, default=10)
     parser.add_argument("--dropout", type=float, default=0.3)
     parser.add_argument("--image-size", type=int, default=224)
-    parser.add_argument("--augment", choices=["none", "light", "realistic"], default="light", help="Type d'augmentation pour l'entraînement.")
+    parser.add_argument("--augment", choices=["none", "light", "realistic"], default="light", help="Augmentation strategy to apply during training.")
     parser.add_argument("--class-filter", nargs="*", help="Subset of classes to keep (e.g., Chao Ervas Milho).")
     parser.add_argument("--limit-per-class", type=int, help="Limit samples per class for quick experiments.")
     parser.add_argument("--num-workers", type=int, default=4)

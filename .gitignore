@@ -1,5 +1,13 @@
 __pycache__/
 .venv/
 build/
-Data/
+
+# Ignore all data files
+Data/raw/*
+Data/processed/*
+
+# But keep directory structure
+!Data/raw/.gitkeep
+!Data/processed/.gitkeep
+
 ImagensTCCRotuladas/

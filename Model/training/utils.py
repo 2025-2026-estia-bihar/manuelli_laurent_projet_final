@@ -31,7 +31,7 @@ def map_aliases(labels: Iterable[str]) -> List[str]:
 
 def build_transforms(image_size: int = 224, augment: str | bool = "none"):
     """
-    augment: 'none' | 'light' | 'realistic' (bool True équivaut à 'light')
+    augment: 'none' | 'light' | 'realistic' (bool True is treated as 'light')
     """
     if isinstance(augment, bool):
         mode = "light" if augment else "none"

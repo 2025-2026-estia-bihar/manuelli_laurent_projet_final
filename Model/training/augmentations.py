@@ -11,8 +11,8 @@ def get_transforms(
     """
     mode:
       - none: resize + normalize
-      - light: simple flips/rotations/color jitter (par défaut ancien comportement)
-      - realistic: plus d'augmentations (flip, rotation, jitter, blur, légère noise)
+      - light: simple flips/rotations/color jitter (previous default behavior)
+      - realistic: heavier augmentations (flip, rotation, jitter, blur, light noise)
     """
     ops = []
     if mode == "light":
@@ -35,7 +35,7 @@ def get_transforms(
     ops.append(transforms.Resize((image_size, image_size)))
     ops.append(transforms.ToTensor())
     if mode == "realistic":
-        # Bruit léger pour simuler capteur
+        # Light noise to mimic sensor noise
         ops.append(transforms.Lambda(lambda x: x + 0.01 * torch.randn_like(x)))
     ops.append(
         transforms.Normalize(

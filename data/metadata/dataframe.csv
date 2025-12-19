@@ -1,0 +1,13 @@
+path,label,split
+Data/raw/train/Chao,Chao,train
+Data/raw/train/Ervas,Ervas,train
+Data/raw/train/Milho,Milho,train
+Data/raw/train/Milho_ervas,Milho_ervas,train
+Data/raw/val/Chao,Chao,val
+Data/raw/val/Ervas,Ervas,val
+Data/raw/val/Milho,Milho,val
+Data/raw/val/Milho_ervas,Milho_ervas,val
+Data/raw/test/Chao,Chao,test
+Data/raw/test/Ervas,Ervas,test
+Data/raw/test/Milho,Milho,test
+Data/raw/test/Milho_ervas,Milho_ervas,test
